@@ -1,17 +1,10 @@
 package com.alt.reminderapp.dummy;
 
-import android.widget.DatePicker;
-import android.widget.TimePicker;
-
-import com.alt.reminderapp.R;
-
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +34,9 @@ public class DummyContent {
         Date call = Calendar.getInstance().getTime();
         String c  = df.format(cal);
         String ca = daf.format(call);
-        String timePicker = c;
-        String datePicker = ca;
-        timePicker.
+
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Call Alex about project.", datePicker, timePicker, "He missed class on Friday."));
+        addItem(new DummyItem("1", "Call Alex about project.", ca, c, "He missed class on Friday."));
         //addItem(new DummyItem("2", "Item 2"));
         //addItem(new DummyItem("3", "Item 3"));
     }

@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import com.alt.reminderapp.dummy.DummyContent;
 
 /**
@@ -54,7 +52,8 @@ public class ReminderDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.reminder_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.reminder_detail)).setText("Reminder: " + mItem.reminder_name +
+                    "\nDate: " + mItem.reminder_date + "\nTime: " + mItem.reminder_time + "\nNote: " + mItem.reminder_note);
         }
 
         return rootView;
