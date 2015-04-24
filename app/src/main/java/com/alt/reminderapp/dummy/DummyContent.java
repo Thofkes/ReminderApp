@@ -1,6 +1,17 @@
 package com.alt.reminderapp.dummy;
 
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+
+import com.alt.reminderapp.R;
+
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +35,19 @@ public class DummyContent {
     public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
     static {
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        DateFormat daf = new SimpleDateFormat("MM/dd/yyyy");
+        Date cal = Calendar.getInstance().getTime();
+        Date call = Calendar.getInstance().getTime();
+        String c  = df.format(cal);
+        String ca = daf.format(call);
+        String timePicker = c;
+        String datePicker = ca;
+        timePicker.
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Item 1"));
-        addItem(new DummyItem("2", "Item 2"));
-        addItem(new DummyItem("3", "Item 3"));
+        addItem(new DummyItem("1", "Call Alex about project.", datePicker, timePicker, "He missed class on Friday."));
+        //addItem(new DummyItem("2", "Item 2"));
+        //addItem(new DummyItem("3", "Item 3"));
     }
 
     private static void addItem(DummyItem item) {
@@ -40,16 +60,25 @@ public class DummyContent {
      */
     public static class DummyItem {
         public String id;
-        public String content;
+        public String reminder_name;
+        public String reminder_date;
+        public String reminder_time;
+        public boolean reminder_status;
+        public String reminder_note;
 
-        public DummyItem(String id, String content) {
+        public DummyItem(String id, String reminder_name, String reminder_date,
+                         String reminder_time, String reminder_note) {
             this.id = id;
-            this.content = content;
+            this.reminder_name = reminder_name;
+            this.reminder_date = reminder_date;
+            this. reminder_time = reminder_time;
+            this.reminder_status = false;
+            this.reminder_note = reminder_note;
         }
 
         @Override
         public String toString() {
-            return content;
+            return reminder_name;
         }
     }
 }
