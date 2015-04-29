@@ -1,8 +1,16 @@
 package com.alt.reminderapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 
 /**
@@ -21,7 +29,7 @@ import android.support.v4.app.FragmentActivity;
  * {@link ReminderListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ReminderListActivity extends FragmentActivity
+public class ReminderListActivity extends ActionBarActivity
         implements ReminderListFragment.Callbacks {
 
     /**
@@ -76,6 +84,66 @@ public class ReminderListActivity extends FragmentActivity
             Intent detailIntent = new Intent(this, ReminderDetailActivity.class);
             detailIntent.putExtra(ReminderDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.new_reminder:
+                showDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showDialog() {
+        DialogFragment newFragment = MyAlertDialogFragment.newInstance();
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
+    public static class MyAlertDialogFragment extends DialogFragment {
+
+        public static MyAlertDialogFragment newInstance() {
+            MyAlertDialogFragment frag = new MyAlertDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("title", R.string.add);
+            frag.setArguments(args);
+            return frag;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.dialog_reminder, null))
+                    // Add action buttons
+                    .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    })
+                    .setNegativeButton(R.string.save, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //LoginDialogFragment.this.getDialog().cancel();
+                        }
+                    });
+            return builder.create();
         }
     }
 }
