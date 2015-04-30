@@ -5,12 +5,15 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -112,6 +115,27 @@ public class ReminderListActivity extends ActionBarActivity
         newFragment.show(getFragmentManager(), "dialog");
     }
 
+    // TODO: Fix the issues in this method.
+    public void doPositiveClick() {
+//        final LinearLayout myLayout = (LinearLayout) findViewById(R.id.linReminder);
+//        final EditText t = (EditText) myLayout.findViewById(R.id.titleTxt);
+//        final String title = t.getText().toString();
+//        final DatePicker date = (DatePicker) myLayout.findViewById(R.id.datePick);
+//        final TimePicker time = (TimePicker) myLayout.findViewById(R.id.timePick);
+//        final EditText n = (EditText) myLayout.findViewById(R.id.noteTxt);
+//        final String note = n.getText().toString();
+        String title = "";
+        if (title.matches("")) {
+            Toast.makeText(this, "You did not enter a title", Toast.LENGTH_SHORT).show();
+            //return;
+        }
+//        else {
+//            DummyContent.DummyItem reminder = new DummyContent.DummyItem("1", title, date, time, note);
+//            DummyContent.addItem(reminder);
+//            Log.i("FragmentAlertDialog", "Positive click!");
+//        }
+    }
+
     public static class MyAlertDialogFragment extends DialogFragment {
 
         public static MyAlertDialogFragment newInstance() {
@@ -122,6 +146,7 @@ public class ReminderListActivity extends ActionBarActivity
             return frag;
         }
 
+        // TODO: Make sure there are no issues in the buttons.
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
@@ -132,18 +157,27 @@ public class ReminderListActivity extends ActionBarActivity
             // Pass null as the parent view because its going in the dialog layout
             builder.setView(inflater.inflate(R.layout.dialog_reminder, null))
                     // Add action buttons
-                    .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            // sign in the user ...
-                        }
-                    })
-                    .setNegativeButton(R.string.save, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //LoginDialogFragment.this.getDialog().cancel();
-                        }
-                    });
-            return builder.create();
+                    .setPositiveButton(R.string.save,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ((ReminderListActivity) getActivity()).doPositiveClick();
+                                }
+                            })
+                    .setNegativeButton(R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    getDialog().cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+            Button positiveButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+            positiveButton.setBackgroundColor(getResources().getColor(R.color.skyblue));
+            positiveButton.setTextColor(Color.WHITE);
+            Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+            negativeButton.setBackgroundColor(Color.RED);
+            negativeButton.setTextColor(Color.WHITE);
+            return alert;
         }
     }
 }
