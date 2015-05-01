@@ -170,6 +170,7 @@ public class ReminderListActivity extends ActionBarActivity
                                 }
                             });
             AlertDialog alert = builder.create();
+            alert.setCanceledOnTouchOutside(true);
             alert.show();
             Button positiveButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
             positiveButton.setBackgroundColor(getResources().getColor(R.color.skyblue));
