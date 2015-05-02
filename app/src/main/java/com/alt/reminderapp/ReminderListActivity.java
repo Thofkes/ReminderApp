@@ -3,18 +3,20 @@ package com.alt.reminderapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
-
 
 /**
  * An activity representing a list of Reminders. This activity
@@ -35,6 +37,12 @@ import android.widget.Toast;
 public class ReminderListActivity extends ActionBarActivity
         implements ReminderListFragment.Callbacks {
 
+    static EditText t;
+    static String title = "";
+    static EditText n;
+    static String note = "";
+    static DatePicker date;
+    static TimePicker time;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -115,28 +123,8 @@ public class ReminderListActivity extends ActionBarActivity
         newFragment.show(getFragmentManager(), "dialog");
     }
 
-    // TODO: Fix the issues in this method.
-    public void doPositiveClick() {
-//        final LinearLayout myLayout = (LinearLayout) findViewById(R.id.linReminder);
-//        final EditText t = (EditText) myLayout.findViewById(R.id.titleTxt);
-//        final String title = t.getText().toString();
-//        final DatePicker date = (DatePicker) myLayout.findViewById(R.id.datePick);
-//        final TimePicker time = (TimePicker) myLayout.findViewById(R.id.timePick);
-//        final EditText n = (EditText) myLayout.findViewById(R.id.noteTxt);
-//        final String note = n.getText().toString();
-        String title = "";
-        if (title.matches("")) {
-            Toast.makeText(this, "You did not enter a title", Toast.LENGTH_SHORT).show();
-            //return;
-        }
-//        else {
-//            DummyContent.DummyItem reminder = new DummyContent.DummyItem("1", title, date, time, note);
-//            DummyContent.addItem(reminder);
-//            Log.i("FragmentAlertDialog", "Positive click!");
-//        }
-    }
 
-    public static class MyAlertDialogFragment extends DialogFragment {
+    public static class MyAlertDialogFragment extends DialogFragment implements View.OnClickListener {
 
         public static MyAlertDialogFragment newInstance() {
             MyAlertDialogFragment frag = new MyAlertDialogFragment();
@@ -146,39 +134,67 @@ public class ReminderListActivity extends ActionBarActivity
             return frag;
         }
 
-        // TODO: Make sure there are no issues in the buttons.
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-            // Get the layout inflater
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
-            // Inflate and set the layout for the dialog
+            // Inflate and set the layout for the custom dialog
             // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.dialog_reminder, null))
-                    // Add action buttons
-                    .setPositiveButton(R.string.save,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    ((ReminderListActivity) getActivity()).doPositiveClick();
-                                }
-                            })
-                    .setNegativeButton(R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    getDialog().cancel();
-                                }
-                            });
+            View v = inflater.inflate(R.layout.dialog_reminder, null);
+
+            t = (EditText) v.findViewById(R.id.titleTxt);
+            date = (DatePicker) v.findViewById(R.id.datePick);
+            time = (TimePicker) v.findViewById(R.id.timePick);
+            n = (EditText) v.findViewById(R.id.noteTxt);
+
+            Button positiveButton = (Button) v.findViewById(R.id.saveBtn);
+            positiveButton.setOnClickListener(this);
+            Button negativeButton = (Button) v.findViewById(R.id.cancelBtn);
+            negativeButton.setOnClickListener(this);
+
+            builder.setView(v);
             AlertDialog alert = builder.create();
             alert.setCanceledOnTouchOutside(true);
             alert.show();
-            Button positiveButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-            positiveButton.setBackgroundColor(getResources().getColor(R.color.skyblue));
-            positiveButton.setTextColor(Color.WHITE);
-            Button negativeButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-            negativeButton.setBackgroundColor(Color.RED);
-            negativeButton.setTextColor(Color.WHITE);
             return alert;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.saveBtn:
+                    title = t.getText().toString();
+                    note = n.getText().toString();
+
+                    Integer year = date.getYear();
+                    Integer month = date.getMonth();
+                    Integer day = date.getDayOfMonth();
+                    StringBuilder sbd = new StringBuilder();
+                    sbd.append(month.toString()).append("/").append(day.toString()).append("/").append(year.toString());
+                    String strDate = sbd.toString();
+
+                    Integer hour = time.getCurrentHour();
+                    Integer minute = time.getCurrentMinute();
+                    StringBuilder sbt = new StringBuilder();
+                    sbt.append(hour.toString()).append(":").append(minute.toString());
+                    String strTime = sbt.toString();
+
+                    if (title.matches("")) {
+                        Toast.makeText(getActivity(), "You did not enter a title", Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        DummyContent.DummyItem reminder = new DummyContent.DummyItem("1", title, strDate, strTime, note);
+                        DummyContent.addItem(reminder);
+                        Log.i("FragmentAlertDialog", "Positive click!");
+                        getDialog().dismiss();
+                        getActivity().recreate();
+                    }
+                    break;
+                case R.id.cancelBtn:
+                    getDialog().cancel();
+                    break;
+            }
         }
     }
 }
