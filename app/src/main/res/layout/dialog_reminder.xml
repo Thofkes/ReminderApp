@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:overScrollMode="ifContentScrolls">
+    android:overScrollMode="ifContentScrolls"
+    tools:context=".ReminderListActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/linReminder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:scrollbars="vertical">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="64dp"
@@ -21,140 +21,161 @@
             android:paddingTop="15dp"
             android:text="@string/add"
             android:textSize="25sp" />
-
         <LinearLayout
             android:id="@+id/linTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:gravity="center_vertical"
+                android:labelFor="@+id/titleTxt"
                 android:text="@string/title"
                 android:textSize="18sp" />
-
             <EditText
                 android:id="@+id/titleTxt"
                 android:layout_width="215dp"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="40dp"
+                android:background="@drawable/abc_edit_text_material"
                 android:gravity="center_vertical"
                 android:hint="@string/title_hint"
                 android:inputType="text" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-15dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="4dp"
                 android:gravity="center_vertical"
+                android:labelFor="@+id/datePick"
                 android:text="@string/date"
                 android:textSize="18sp" />
 
-            <DatePicker
+            <EditText
                 android:id="@+id/datePick"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
-                android:spinnersShown="true" />
-
+                android:layout_height="fill_parent"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/Green2"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:hint="@string/tap"
+                android:inputType="date"
+                android:padding="5dp"
+                android:textAlignment="center" />
+            <!--<DatePicker-->
+            <!--android:id="@+id/datePick"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:calendarViewShown="false"-->
+            <!--android:datePickerMode="spinner"-->
+            <!--android:scaleX="0.9"-->
+            <!--android:scaleY="0.9"-->
+            <!--android:spinnersShown="true" />-->
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linTime"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-65dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:gravity="center_vertical"
+                android:labelFor="@+id/timePick"
                 android:text="@string/time"
                 android:textSize="18sp" />
 
-            <TimePicker
+            <EditText
                 android:id="@+id/timePick"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
-                android:timePickerMode="spinner" />
+                android:layout_height="fill_parent"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/Green2"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:hint="@string/tap"
+                android:inputType="time"
+                android:padding="5dp"
+                android:textAlignment="center" />
+            <!--<TimePicker-->
+            <!--android:id="@+id/timePick"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleX="0.9"-->
+            <!--android:scaleY="0.9"-->
+            <!--android:timePickerMode="spinner" />-->
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linNote"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="-30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="4dp"
                 android:gravity="center_vertical"
+                android:labelFor="@+id/noteTxt"
                 android:text="@string/note"
                 android:textSize="18sp" />
-
             <EditText
                 android:id="@+id/noteTxt"
                 android:layout_width="215dp"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="40dp"
                 android:gravity="center_vertical"
                 android:hint="@string/note_hint"
                 android:inputType="text" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/linButtons"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:orientation="horizontal"
             android:weightSum="1">
-
-            <Button
-                android:id="@+id/saveBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:background="@color/skyblue"
-                android:text="@string/save"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
-
             <Button
                 android:id="@+id/cancelBtn"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="-2dp"
                 android:layout_weight="0.5"
                 android:background="@color/red"
                 android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/saveBtn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-2dp"
+                android:layout_weight="0.5"
+                android:background="@color/skyblue"
+                android:text="@string/save"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
         </LinearLayout>

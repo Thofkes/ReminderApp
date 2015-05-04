@@ -2,5 +2,19 @@
 <resources>
     <color name="skyblue">#00BFFF</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="red">#FD3232</color>
+    <color name="Indigo">#536DFE</color>
+    <color name="DeepOrange">#FF5722</color>
+    <color name="Green">#4CAF50</color>
+    <color name="Yellow">#FBC02D</color>
+    <color name="color_action_mode_bg">#424242</color>
+    <color name="lightgray">#CFD8DC</color>
+    <color name="lightblue">#03A9F4</color>
+    <color name="lightblue2">#8003A9F4</color>
+
+    <color name="Indigo2">#80536DFE</color>
+    <color name="DeepOrange2">#80FF5722</color>
+    <color name="Green2">#804CAF50</color>
+    <color name="Yellow2">#80FBC02D</color>
 </resources>

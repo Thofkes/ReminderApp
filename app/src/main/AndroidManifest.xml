@@ -7,6 +7,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.sec.android.airview.enable"
+            android:value="true" />
+
         <activity
             android:name=".ReminderListActivity"
             android:label="@string/app_name" >
@@ -15,7 +19,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.sec.android.airview.HOVER" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".ReminderDetailActivity"
             android:label="@string/title_reminder_detail"
@@ -24,6 +32,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReminderListActivity" />
         </activity>
+
     </application>
 
 </manifest>

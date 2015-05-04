@@ -1,10 +1,137 @@
-<TextView
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/reminder_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context=".ReminderDetailFragment" />
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:overScrollMode="ifContentScrolls"
+    tools:context=".ReminderDetailFragment">
+
+    <LinearLayout
+        android:id="@+id/reminder_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Indigo"
+                android:gravity="center"
+                android:labelFor="@+id/titleDetail"
+                android:padding="16dp"
+                android:text="@string/title_detail"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/titleDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Green"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/date_detail"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/dtDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Yellow"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/time_detail"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tiDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linNote"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/DeepOrange"
+                android:gravity="center"
+                android:labelFor="@+id/noteDetail"
+                android:padding="16dp"
+                android:text="@string/note_detail"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/noteDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

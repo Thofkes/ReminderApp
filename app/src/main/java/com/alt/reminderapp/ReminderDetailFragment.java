@@ -52,15 +52,18 @@ public class ReminderDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
 
-            TextView editText = ((TextView) rootView.findViewById(R.id.reminder_detail));
+            //String myFormat = "EEEE, MMMM d, yyyy";
+            //SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-            editText.append("Reminder: " + mItem.reminder_name);
-            editText.append("\n");
-            editText.append("Date:     " + mItem.reminder_date);
-            editText.append("\n");
-            editText.append("Time:     " + mItem.reminder_time);
-            editText.append("\n");
-            editText.append("Note:     " + mItem.reminder_note);
+            TextView title = ((TextView) rootView.findViewById(R.id.titleDetail));
+            TextView date = ((TextView) rootView.findViewById(R.id.dtDetail));
+            TextView time = ((TextView) rootView.findViewById(R.id.tiDetail));
+            TextView note = ((TextView) rootView.findViewById(R.id.noteDetail));
+
+            title.setText(mItem.reminder_name);
+            date.append(mItem.reminder_date);
+            time.append(mItem.reminder_time);
+            note.setText(mItem.reminder_note);
         }
         return rootView;
     }

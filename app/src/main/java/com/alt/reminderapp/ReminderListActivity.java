@@ -1,8 +1,10 @@
 package com.alt.reminderapp;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +19,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * An activity representing a list of Reminders. This activity
@@ -41,13 +48,25 @@ public class ReminderListActivity extends ActionBarActivity
     static String title = "";
     static EditText n;
     static String note = "";
-    static DatePicker date;
-    static TimePicker time;
+    static EditText da;
+    static String date = "";
+    static EditText ti;
+    static String time = "";
+    static long randomID;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+
+    private static long GenerateId() {
+        long randomId;
+        Random rand = new Random();
+        randomId = rand.nextLong();
+
+        return randomId;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +142,10 @@ public class ReminderListActivity extends ActionBarActivity
         newFragment.show(getFragmentManager(), "dialog");
     }
 
-
     public static class MyAlertDialogFragment extends DialogFragment implements View.OnClickListener {
+
+        MyEditTextDatePicker metdp1 = new MyEditTextDatePicker();
+        MyEditTextTimePicker metdp2 = new MyEditTextTimePicker();
 
         public static MyAlertDialogFragment newInstance() {
             MyAlertDialogFragment frag = new MyAlertDialogFragment();
@@ -144,9 +165,12 @@ public class ReminderListActivity extends ActionBarActivity
             View v = inflater.inflate(R.layout.dialog_reminder, null);
 
             t = (EditText) v.findViewById(R.id.titleTxt);
-            date = (DatePicker) v.findViewById(R.id.datePick);
-            time = (TimePicker) v.findViewById(R.id.timePick);
+            da = (EditText) v.findViewById(R.id.datePick);
+            ti = (EditText) v.findViewById(R.id.timePick);
             n = (EditText) v.findViewById(R.id.noteTxt);
+
+            da.setOnClickListener(metdp1);
+            ti.setOnClickListener(metdp2);
 
             Button positiveButton = (Button) v.findViewById(R.id.saveBtn);
             positiveButton.setOnClickListener(this);
@@ -155,7 +179,6 @@ public class ReminderListActivity extends ActionBarActivity
 
             builder.setView(v);
             AlertDialog alert = builder.create();
-            alert.setCanceledOnTouchOutside(true);
             alert.show();
             return alert;
         }
@@ -165,35 +188,116 @@ public class ReminderListActivity extends ActionBarActivity
             switch (v.getId()) {
                 case R.id.saveBtn:
                     title = t.getText().toString();
+                    date = da.getText().toString();
+                    time = ti.getText().toString();
                     note = n.getText().toString();
 
-                    Integer year = date.getYear();
-                    Integer month = date.getMonth();
-                    Integer day = date.getDayOfMonth();
-                    StringBuilder sbd = new StringBuilder();
-                    sbd.append(month.toString()).append("/").append(day.toString()).append("/").append(year.toString());
-                    String strDate = sbd.toString();
+//                    Integer year = date.getYear();
+//                    Integer month = date.getMonth();
+//                    Integer day = date.getDayOfMonth();
+//                    StringBuilder sbd = new StringBuilder();
+//                    sbd.append(month.toString()).append("/").append(day.toString()).append("/").append(year.toString());
+//                    String strDate = sbd.toString();
 
-                    Integer hour = time.getCurrentHour();
-                    Integer minute = time.getCurrentMinute();
-                    StringBuilder sbt = new StringBuilder();
-                    sbt.append(hour.toString()).append(":").append(minute.toString());
-                    String strTime = sbt.toString();
+//                    Integer hour = time.getCurrentHour();
+//                    Integer minute = time.getCurrentMinute();
+//                    StringBuilder sbt = new StringBuilder();
+//                    sbt.append(hour.toString()).append(":").append(minute.toString());
+//                    String strTime = sbt.toString();
 
                     if (title.matches("")) {
-                        Toast.makeText(getActivity(), "You did not enter a title", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "You did not enter a title!", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (date.matches("")) {
+                        Toast.makeText(getActivity(), "You did not enter a date!", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (time.matches("")) {
+                        Toast.makeText(getActivity(), "You did not enter a time!", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-                        DummyContent.DummyItem reminder = new DummyContent.DummyItem("1", title, strDate, strTime, note);
+                        randomID = GenerateId();
+                        String ID = String.valueOf(randomID);
+                        DummyContent.DummyItem reminder = new DummyContent.DummyItem(ID, title, date, time, note);
                         DummyContent.addItem(reminder);
-                        Log.i("FragmentAlertDialog", "Positive click!");
+                        Log.i("FragmentAlertDialog", "Save button click!");
                         getDialog().dismiss();
                         getActivity().recreate();
                     }
                     break;
                 case R.id.cancelBtn:
                     getDialog().cancel();
+                    Log.i("FragmentAlertDialog", "Cancel button click!");
                     break;
+            }
+        }
+
+        public class MyEditTextDatePicker implements View.OnClickListener {
+
+            Calendar myCalendar = Calendar.getInstance();
+
+            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    // TODO Auto-generated method stub
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel();
+                }
+            };
+
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog dpd = new DatePickerDialog(getActivity(), date,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                dpd.show();
+            }
+
+            private void updateLabel() {
+
+                //String myFormat = "MM/dd/yyyy";
+                String myFormat = "E, MMM d, yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                da.setText(sdf.format(myCalendar.getTime()));
+            }
+        }
+
+        public class MyEditTextTimePicker implements View.OnClickListener {
+
+            Calendar myCalendar = Calendar.getInstance();
+
+            TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+
+                @Override
+                public void onTimeSet(TimePicker view, int hour, int minute) {
+                    // TODO Auto-generated method stub
+                    myCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                    myCalendar.set(Calendar.MINUTE, minute);
+                    updateLabel();
+                }
+            };
+
+            @Override
+            public void onClick(View v) {
+
+                new TimePickerDialog(getActivity(), time,
+                        myCalendar.get(Calendar.HOUR_OF_DAY),
+                        myCalendar.get(Calendar.MINUTE), false).show();
+            }
+
+            private void updateLabel() {
+
+                String myFormat = "h:mm a";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                ti.setText(sdf.format(myCalendar.getTime()));
             }
         }
     }

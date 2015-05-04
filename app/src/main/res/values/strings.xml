@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Reminders</string>
-    <string name="title_reminder_detail">Reminder Detail</string>
     <string name="new_reminder">New Reminder</string>
+
     <string name="add">Create Your Reminder</string>
     <string name="title">Title:</string>
     <string name="title_hint">Finish homework...</string>
@@ -11,7 +11,15 @@
     <string name="note_hint">Write note here...</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="tap">tap here</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="title_reminder_detail">Reminder Details</string>
+    <string name="title_detail">Title</string>
+    <string name="date_detail">Date</string>
+    <string name="time_detail">Time</string>
+    <string name="note_detail">Note</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
