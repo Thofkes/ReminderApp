@@ -3,7 +3,14 @@ package com.alt.reminderapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -16,7 +23,7 @@ import android.widget.ListView;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ReminderListFragment extends ListFragment {
+public class ReminderListFragment extends ListFragment implements AbsListView.MultiChoiceModeListener {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -32,6 +39,7 @@ public class ReminderListFragment extends ListFragment {
         public void onItemSelected(String id) {
         }
     };
+    ListView lv;
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
@@ -69,6 +77,10 @@ public class ReminderListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
+
+        lv = getListView();
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        lv.setMultiChoiceModeListener(this);
     }
 
     @Override
@@ -129,6 +141,66 @@ public class ReminderListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                          long id, boolean checked) {
+        // Here you can do something when items are selected/de-selected,
+        // such as update the title in the CAB
+        mode.setTitle(lv.getCheckedItemCount() + " selected items");
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        // Respond to clicks on the actions in the CAB
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                Log.i("TAG", "Action item DELETE clicked");
+                deleteSelectedItems();
+                mode.finish(); // Action picked, so close the CAB
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        // Inflate the menu for the CAB
+        Log.i("TAG", "Creating action mode");
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context, menu);
+        return true;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        // Here you can make any necessary updates to the activity when
+        // the CAB is removed. By default, selected items are deselected/unchecked.
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        // Here you can perform updates to the CAB due to
+        // an invalidate() request
+        return false;
+    }
+
+    public void deleteSelectedItems() {
+        // lv is my ListView
+        SparseBooleanArray checked = lv.getCheckedItemPositions();
+        int size = checked.size();
+        if (checked.size() > 0) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (checked.valueAt(i)) {
+                    Object obj = lv.getItemAtPosition(checked.keyAt(i));
+                    DummyContent.DummyItem item = (DummyContent.DummyItem) obj;
+                    DummyContent.ITEMS.remove(item);
+                    Log.d("checked/deleted item: ", item.reminder_name);
+                }
+            }
+        }
     }
 
     /**
