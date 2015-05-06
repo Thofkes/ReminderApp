@@ -192,19 +192,6 @@ public class ReminderListActivity extends ActionBarActivity
                     time = ti.getText().toString();
                     note = n.getText().toString();
 
-//                    Integer year = date.getYear();
-//                    Integer month = date.getMonth();
-//                    Integer day = date.getDayOfMonth();
-//                    StringBuilder sbd = new StringBuilder();
-//                    sbd.append(month.toString()).append("/").append(day.toString()).append("/").append(year.toString());
-//                    String strDate = sbd.toString();
-
-//                    Integer hour = time.getCurrentHour();
-//                    Integer minute = time.getCurrentMinute();
-//                    StringBuilder sbt = new StringBuilder();
-//                    sbt.append(hour.toString()).append(":").append(minute.toString());
-//                    String strTime = sbt.toString();
-
                     if (title.matches("")) {
                         Toast.makeText(getActivity(), "You did not enter a title!", Toast.LENGTH_SHORT).show();
                         return;
@@ -217,8 +204,8 @@ public class ReminderListActivity extends ActionBarActivity
                     } else {
                         randomID = GenerateId();
                         String ID = String.valueOf(randomID);
-                        DummyContent.DummyItem reminder = new DummyContent.DummyItem(ID, title, date, time, note);
-                        DummyContent.addItem(reminder);
+                        ReminderContent.ReminderItem reminder = new ReminderContent.ReminderItem(ID, title, date, time, note);
+                        ReminderContent.addItem(reminder);
                         Log.i("FragmentAlertDialog", "Save button click!");
                         getDialog().dismiss();
                         getActivity().recreate();
@@ -261,7 +248,6 @@ public class ReminderListActivity extends ActionBarActivity
 
             private void updateLabel() {
 
-                //String myFormat = "MM/dd/yyyy";
                 String myFormat = "E, MMM d, yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -277,7 +263,6 @@ public class ReminderListActivity extends ActionBarActivity
 
                 @Override
                 public void onTimeSet(TimePicker view, int hour, int minute) {
-                    // TODO Auto-generated method stub
                     myCalendar.set(Calendar.HOUR_OF_DAY, hour);
                     myCalendar.set(Calendar.MINUTE, minute);
                     updateLabel();

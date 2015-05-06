@@ -14,6 +14,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 /**
  * A list fragment representing a list of Reminders. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -40,6 +42,7 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
         }
     };
     ListView lv;
+    private RemindersDataSource datasource;
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
@@ -61,11 +64,15 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        datasource = new RemindersDataSource(this);
+        datasource.open();
+        List<Reminder> values = datasource.getAllReminders();
+
+        setListAdapter(new ArrayAdapter<Reminder>(
                 getActivity(),
-                R.layout.simple_list_item_activated_1,
+                R.layout.simple_list_item,
                 R.id.text1,
-                DummyContent.ITEMS));
+                values));
     }
 
     @Override
@@ -109,7 +116,7 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(ReminderContent.ITEMS.get(position).id);
     }
 
     @Override
@@ -195,8 +202,8 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
             for (int i = size - 1; i >= 0; i--) {
                 if (checked.valueAt(i)) {
                     Object obj = lv.getItemAtPosition(checked.keyAt(i));
-                    DummyContent.DummyItem item = (DummyContent.DummyItem) obj;
-                    DummyContent.ITEMS.remove(item);
+                    ReminderContent.ReminderItem item = (ReminderContent.ReminderItem) obj;
+                    ReminderContent.ITEMS.remove(item);
                     Log.d("checked/deleted item: ", item.reminder_name);
                 }
             }
@@ -212,6 +219,6 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        void onItemSelected(String id);
     }
 }
