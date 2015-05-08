@@ -24,16 +24,15 @@ public class ReminderContent {
     static {
 
         //Add 3 sample reminder items.
-        addItem(new ReminderItem("1", "Tap the plus to get started!", "This is where the date will be displayed.", "This is where the time will be displayed.", "This is where the note will be displayed."));
-        addItem(new ReminderItem("2", "Long press reminder to delete", "Mon, May 4th, 2015", "1:00 PM", "He loves Android."));
-        addItem(new ReminderItem("3", "Reminder 1", "Mon, May 4th, 2015", "1:00 PM", "He loves Android."));
-        addItem(new ReminderItem("4", "Reminder 2", "Mon, May 4th, 2015", "1:00 PM", "He loves Android."));
-        addItem(new ReminderItem("5", "Reminder 3", "Mon, May 4th, 2015", "1:00 PM", "He loves Android."));
+        addItem(new ReminderItem("1", "Tap the plus to get started!", "Mon, May 8th, 2015", "11:15 AM", "Android rocks!"));
+        addItem(new ReminderItem("2", "Long press a reminder to delete.", "Mon, May 4th, 2015", "1:00 PM", "We love Android."));
     }
 
     public static void addItem(ReminderItem item) {
+
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
+
     }
 
     /**
@@ -53,6 +52,10 @@ public class ReminderContent {
             this.reminder_date = reminder_date;
             this. reminder_time = reminder_time;
             this.reminder_note = reminder_note;
+        }
+
+        public long getId() {
+            return Long.parseLong(id);
         }
 
         @Override

@@ -204,6 +204,7 @@ public class ReminderListActivity extends ActionBarActivity
                     } else {
                         randomID = GenerateId();
                         String ID = String.valueOf(randomID);
+
                         ReminderContent.ReminderItem reminder = new ReminderContent.ReminderItem(ID, title, date, time, note);
                         ReminderContent.addItem(reminder);
                         Log.i("FragmentAlertDialog", "Save button click!");

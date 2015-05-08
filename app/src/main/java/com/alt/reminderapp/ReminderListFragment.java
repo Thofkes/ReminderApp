@@ -14,8 +14,6 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
-
 /**
  * A list fragment representing a list of Reminders. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -42,7 +40,6 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
         }
     };
     ListView lv;
-    private RemindersDataSource datasource;
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
@@ -64,15 +61,11 @@ public class ReminderListFragment extends ListFragment implements AbsListView.Mu
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        datasource = new RemindersDataSource(this);
-        datasource.open();
-        List<Reminder> values = datasource.getAllReminders();
-
-        setListAdapter(new ArrayAdapter<Reminder>(
+        setListAdapter(new ArrayAdapter<ReminderContent.ReminderItem>(
                 getActivity(),
                 R.layout.simple_list_item,
                 R.id.text1,
-                values));
+                ReminderContent.ITEMS));
     }
 
     @Override
